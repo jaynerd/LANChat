@@ -68,14 +68,22 @@ public class MainView extends JFrame {
         addPanel(modeViewTitle, modeView);
     }
 
-    // displays the server setting panel where user can modify
+    // displays the server setting panel where users can modify
     // server specifications.
     public void showServerSettingView() {
         ServerSettingView serverSetView = new ServerSettingView();
         addPanel(serverSetViewTitle, serverSetView);
     }
 
+    // displays the client setting panel where users can modify
+    // values to connect to the desired server.
     public void showClientSettingView() {
+    }
+
+    // displays the server side view to control over the chat
+    // application.
+    public void showServerView(int port) {
+        System.out.print("Server Initiated");
     }
 
 }
