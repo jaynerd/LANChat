@@ -1,6 +1,7 @@
 package com.namyoon.dsm.appcore;
 
 import com.namyoon.dsm.guicore.MainView;
+import com.namyoon.dsm.guicore.ServerView;
 
 /**
  * @author Namyoon Kim
@@ -11,6 +12,9 @@ import com.namyoon.dsm.guicore.MainView;
  */
 
 public class LANChat {
+
+    public void activateServer(ServerView serverView, int port) {
+    }
 
     public static void main(String[] args) {
         LANChat lanChat = new LANChat();

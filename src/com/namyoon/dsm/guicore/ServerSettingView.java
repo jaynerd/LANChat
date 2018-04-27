@@ -18,15 +18,9 @@ import java.awt.event.ActionEvent;
 
 public class ServerSettingView extends SuperPanel implements InterfacePanel {
 
-    // server networking specifications.
-    private int port = 0;
-    private int minValue = 1;
-    private int maxValue = 65535;
-
     // GUI components.
     private JButton activateButton;
     private JTextField portInputField;
-    private String errorMsg = "Please enter values between 1 to 65535.";
 
     public ServerSettingView() {
         init();
@@ -55,25 +49,18 @@ public class ServerSettingView extends SuperPanel implements InterfacePanel {
     // adds corresponding actions to each buttons.
     public void addActions() {
         activateButton.addActionListener((ActionEvent e) -> {
-            validatePortValue();
-        });
-    }
-
-    // when activate button is pressed, validates given port number
-    // before initiating the server socket.
-    // a server will be running upon receiving correct port values.
-    private void validatePortValue() {
-        try {
-            port = Integer.parseInt(portInputField.getText().trim());
-            if (port < minValue || maxValue < port) {
-                JOptionPane.showMessageDialog(null, errorMsg, "Server Initialization Failed", JOptionPane.INFORMATION_MESSAGE);
+            boolean flag = false;
+            int port = 0;
+            try {
+                port = Integer.parseInt(portInputField.getText().trim());
+            } catch (NumberFormatException ex) {
+                port = 0;
             }
-        } catch (NumberFormatException ex) {
-            port = 0;
-        }
-        if (minValue <= port && port <= maxValue) {
-            mainView.showServerView(port);
-        }
+            flag = mainView.validatePortValue(port);
+            if (flag) {
+                mainView.showServerView(port);
+            }
+        });
     }
 
 }

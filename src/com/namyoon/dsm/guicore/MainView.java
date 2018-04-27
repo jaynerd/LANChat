@@ -1,6 +1,7 @@
 package com.namyoon.dsm.guicore;
 
 import com.namyoon.dsm.appcore.LANChat;
+import com.sun.security.ntlm.Server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,16 +19,22 @@ public class MainView extends JFrame {
     private LANChat lanChat;
     public static MainView Instance;
 
+    // server networking specifications.
+    private int port = 0;
+    private int minValue = 1;
+    private int maxValue = 65535;
+    private String errorMsg = "Please enter values between 1 to 65535.";
+
     // main frame size & visual specifications.
     public static int frameWidth;
     public static int frameHeight;
-
     private float frameWidthRatio = 1.5f;
     private float frameHeightRatio = 1.2f;
 
     // panel titles.
     private String modeViewTitle = "LANChat: Mode Selection";
     private String serverSetViewTitle = "LANChat: Server Settings";
+    private String serverViewTitle = "LANChat: Server";
 
     public MainView(LANChat lanChat) {
         this.lanChat = lanChat;
@@ -82,8 +89,26 @@ public class MainView extends JFrame {
 
     // displays the server side view to control over the chat
     // application.
+    // Also, by showing the server view, the server socket gets
+    // activated from the application core library.
     public void showServerView(int port) {
-        System.out.print("Server Initiated");
+        ServerView serverView = new ServerView();
+        addPanel(serverViewTitle, serverView);
+        lanChat.activateServer(serverView, port);
+    }
+
+    // validates given port number before initiating the server socket.
+    // returns true when a legit port number is provided.
+    // a server will be running upon receiving correct port values.
+    public boolean validatePortValue(int port) {
+        boolean flag = false;
+        this.port = port;
+        if (port < minValue || maxValue < port) {
+            JOptionPane.showMessageDialog(null, errorMsg, "Server Initialization Failed", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            flag = true;
+        }
+        return flag;
     }
 
 }
