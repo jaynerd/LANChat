@@ -1,5 +1,6 @@
 package com.namyoon.dsm.appcore;
 
+import com.namyoon.dsm.guicore.ClientView;
 import com.namyoon.dsm.guicore.MainView;
 import com.namyoon.dsm.guicore.ServerView;
 
@@ -14,6 +15,9 @@ import com.namyoon.dsm.guicore.ServerView;
 public class LANChat {
 
     public void activateServer(ServerView serverView, int port) {
+    }
+
+    public void createClient(ClientView clientView, int port, String ipAddress, String userID) {
     }
 
     public static void main(String[] args) {

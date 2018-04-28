@@ -50,6 +50,7 @@ public class ClientSettingView extends SuperPanel implements InterfacePanel {
         idInputField = new JTextField(20);
         ipInputField = new JTextField(20);
         portInputField = new JTextField(10);
+        idInputField.setText("Hacker");
         ipInputField.setText("localhost");
 
         // button.
@@ -80,12 +81,13 @@ public class ClientSettingView extends SuperPanel implements InterfacePanel {
             } catch (NumberFormatException ex) {
                 port = 0;
             }
+
             // checking a given port value.
             flag = mainView.validatePortValue(port);
             if (flag) {
                 // checking user ID value.
                 if (userID != null && !userID.isEmpty()) {
-                    mainView.showClientView(userID, ipAddress, port);
+                    mainView.showClientView(port, ipAddress, userID);
                 } else {
                     JOptionPane.showMessageDialog(null, errorMsg, "Server Connection Failed", JOptionPane.INFORMATION_MESSAGE);
                 }

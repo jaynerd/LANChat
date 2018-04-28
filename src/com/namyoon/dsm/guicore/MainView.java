@@ -1,6 +1,7 @@
 package com.namyoon.dsm.guicore;
 
 import com.namyoon.dsm.appcore.LANChat;
+import com.sun.security.ntlm.Client;
 import com.sun.security.ntlm.Server;
 
 import javax.swing.*;
@@ -36,6 +37,7 @@ public class MainView extends JFrame {
     private String serverSetViewTitle = "LANChat: Server Settings";
     private String clientSetViewTitle = "LANChat: Client Settings";
     private String serverViewTitle = "LANChat: Server";
+    private String clientViewTitle = "LANChat: Client";
 
     public MainView(LANChat lanChat) {
         this.lanChat = lanChat;
@@ -104,7 +106,10 @@ public class MainView extends JFrame {
     // displays the client side of the main chatting window.
     // users can send and receive messages including the server log.
     // They also can send private messages to a specific user.
-    public void showClientView(String userID, String ipAddress, int port) {
+    public void showClientView(int port, String ipAddress, String userID) {
+        ClientView clientView = new ClientView();
+        addPanel(clientViewTitle, clientView);
+        lanChat.createClient(clientView, port, ipAddress, userID);
     }
 
     // validates given port number before initiating the server socket.

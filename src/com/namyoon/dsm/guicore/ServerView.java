@@ -50,7 +50,7 @@ public class ServerView extends SuperPanel implements InterfacePanel {
     }
 
     // shows server log messages.
-    public void showServerMsg(String message) {
+    public void showMessage(String message) {
         logTextArea.append("Server: " + message + "\n");
     }
 
