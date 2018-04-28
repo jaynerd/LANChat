@@ -8,7 +8,8 @@ import com.namyoon.dsm.guicore.ServerView;
  * @author Namyoon Kim
  * <p>
  * Main framework of the LANChat application.
- * Handles essential requests from GUI and passes to the core models.
+ * Handles essential requests from GUI and passes
+ * to the core models.
  * </p>
  */
 

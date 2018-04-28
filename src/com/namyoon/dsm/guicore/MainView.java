@@ -1,8 +1,6 @@
 package com.namyoon.dsm.guicore;
 
 import com.namyoon.dsm.appcore.LANChat;
-import com.sun.security.ntlm.Client;
-import com.sun.security.ntlm.Server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +8,9 @@ import java.awt.*;
 /**
  * @author Namyoon Kim
  * <p>
- * This class controls specifications of the main frame for the application.
- * Shows assigned panels based on user's input.
+ * This class controls specifications of the main
+ * frame for the application. Shows assigned panels
+ * based on user's input.
  * </p>
  */
 
@@ -36,8 +35,8 @@ public class MainView extends JFrame {
     private String modeViewTitle = "LANChat: Mode Selection";
     private String serverSetViewTitle = "LANChat: Server Settings";
     private String clientSetViewTitle = "LANChat: Client Settings";
-    private String serverViewTitle = "LANChat: Server";
-    private String clientViewTitle = "LANChat: Client";
+    private String serverViewTitle = "LANChat: Server Terminal";
+    private String clientViewTitle = "LANChat: Client Terminal";
 
     public MainView(LANChat lanChat) {
         this.lanChat = lanChat;

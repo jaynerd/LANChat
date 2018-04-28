@@ -6,6 +6,17 @@ import com.namyoon.dsm.guitemplate.SuperPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author Namyoon Kim
+ * <p>
+ * This class instantiates the client view, which is the main
+ * chatting application view. Mainly handles displaying process
+ * of the in and out stream of broadcasted messages. When the
+ * client sends a message, it gets transferred to the server,
+ * then broadcased to other clients on the server.
+ * </p>
+ */
+
 public class ClientView extends SuperPanel implements InterfacePanel {
 
     public ClientView() {

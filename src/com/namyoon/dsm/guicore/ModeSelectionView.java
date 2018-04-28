@@ -11,8 +11,9 @@ import java.awt.event.ActionEvent;
  * @author Namyoon Kim
  * <p>
  * This class instantiates the mode selection view,
- * where users can choose to start the application as a client or server.
- * Primarily handles GUI prompt features.
+ * where users can choose to start the application
+ * as a client or server. Primarily handles GUI prompt
+ * features.
  * </p>
  */
 

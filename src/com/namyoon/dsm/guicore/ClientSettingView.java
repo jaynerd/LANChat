@@ -11,8 +11,9 @@ import java.awt.event.ActionEvent;
  * @author Namyoon Kim
  * <p>
  * This class instantiates a client setting view where
- * users can input desired ID, IP address, and a port number to initiating
- * a connection to the main chatting server.
+ * users can input desired ID, IP address, and a port
+ * number to initiating a connection to the main chatting
+ * server.
  * </p>
  */
 

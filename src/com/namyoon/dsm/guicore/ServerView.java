@@ -9,8 +9,8 @@ import java.awt.*;
 /**
  * @author Namyoon Kim
  * <p>
- * This class instantiates the server view.
- * Mainly handles display of the server related GUI components.
+ * This class instantiates the server view. Mainly handles
+ * displaying process of the server related GUI components.
  * When the server gets an updated notification, it passes to
  * this server view class to show the message to the server admin.
  * </p>
