@@ -18,6 +18,7 @@ import java.awt.*;
 
 public class ServerView extends SuperPanel implements InterfacePanel {
 
+    // GUI component.
     private JTextArea logTextArea;
 
     public ServerView() {
@@ -52,4 +53,5 @@ public class ServerView extends SuperPanel implements InterfacePanel {
     public void showServerMsg(String message) {
         logTextArea.append("Server: " + message + "\n");
     }
+
 }

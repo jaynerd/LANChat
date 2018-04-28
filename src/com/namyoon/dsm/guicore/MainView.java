@@ -34,6 +34,7 @@ public class MainView extends JFrame {
     // panel titles.
     private String modeViewTitle = "LANChat: Mode Selection";
     private String serverSetViewTitle = "LANChat: Server Settings";
+    private String clientSetViewTitle = "LANChat: Client Settings";
     private String serverViewTitle = "LANChat: Server";
 
     public MainView(LANChat lanChat) {
@@ -84,7 +85,10 @@ public class MainView extends JFrame {
 
     // displays the client setting panel where users can modify
     // values to connect to the desired server.
+    // can be assumed as a general login view.
     public void showClientSettingView() {
+        ClientSettingView clientSetView = new ClientSettingView();
+        addPanel(clientSetViewTitle, clientSetView);
     }
 
     // displays the server side view to control over the chat
@@ -95,6 +99,12 @@ public class MainView extends JFrame {
         ServerView serverView = new ServerView();
         addPanel(serverViewTitle, serverView);
         lanChat.activateServer(serverView, port);
+    }
+
+    // displays the client side of the main chatting window.
+    // users can send and receive messages including the server log.
+    // They also can send private messages to a specific user.
+    public void showClientView(String userID, String ipAddress, int port) {
     }
 
     // validates given port number before initiating the server socket.
