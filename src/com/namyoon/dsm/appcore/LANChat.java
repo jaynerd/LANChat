@@ -15,12 +15,17 @@ import com.namyoon.dsm.guicore.ServerView;
 
 public class LANChat {
 
+    // activates a server upon receiving required server settings
+    // from server view class.
     public void activateServer(ServerView serverView, int port) {
+        Server server = new Server(serverView, port);
     }
 
+    // instantiates a client when a user logs in with valid information.
     public void createClient(ClientView clientView, int port, String ipAddress, String userID) {
     }
 
+    // starts the app from the main view.
     public static void main(String[] args) {
         LANChat lanChat = new LANChat();
         MainView mainView = new MainView(lanChat);
