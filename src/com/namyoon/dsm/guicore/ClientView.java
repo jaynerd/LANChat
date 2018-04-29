@@ -19,6 +19,8 @@ import java.awt.*;
 
 public class ClientView extends SuperPanel implements InterfacePanel {
 
+    private JTextArea chatTextArea;
+
     public ClientView() {
         init();
         addComponents();
@@ -35,7 +37,7 @@ public class ClientView extends SuperPanel implements InterfacePanel {
     public void addComponents() {
         JButton sendButton = new JButton("Send");
         JTextField inputTextField = new JTextField();
-        JTextArea chatTextArea = new JTextArea();
+        chatTextArea = new JTextArea();
         chatTextArea.setRows(5);
         chatTextArea.setColumns(50);
         chatTextArea.setEditable(false);
@@ -54,7 +56,7 @@ public class ClientView extends SuperPanel implements InterfacePanel {
 
     // shows client messages.
     public void showMessage(String message) {
-        //chatTextArea.append(message);
+        chatTextArea.append(message + "\n");
     }
 
 }

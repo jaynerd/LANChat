@@ -48,8 +48,7 @@ public class Broadcaster extends Thread {
             synchronized (clientInfo) {
                 clientInfo.put(clientID, dos);
             }
-            broadcast("User ID: " + clientID + " has been connected.");
-
+            broadcast("User ID '" + clientID + "' has been connected.");
         } catch (IOException ex) {
             // unable to receive streams from the client.
             ex.printStackTrace();
@@ -59,8 +58,8 @@ public class Broadcaster extends Thread {
     // the main tread of receiving and sending messages.
     public void run() {
         try {
-            String message;
-            while ((message = dis.readUTF()) != null) {
+            while (true) {
+                String message = dis.readUTF();
                 if (message.equals("/quit")) {
                     // quitting the application by exiting the current
                     // thread.

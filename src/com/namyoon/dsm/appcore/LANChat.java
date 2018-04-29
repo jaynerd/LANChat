@@ -22,8 +22,8 @@ public class LANChat {
     }
 
     // instantiates a client when a user logs in with valid information.
-    public void createClient(ClientView clientView, int port, String ipAddress, String userID) {
-    // Client client = new Client(clientView,port,ipAddress,userID);
+    public void createClient(ClientView clientView, int port, String ipAddress, String clientID) {
+        Client client = new Client(clientView, port, ipAddress, clientID);
     }
 
     // starts the app from the main view.
