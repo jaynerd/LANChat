@@ -10,10 +10,10 @@ import java.util.HashMap;
 /**
  * @author Namyoon Kim
  * <p>
- * This class instantiates a client setting view where
- * users can input desired ID, IP address, and a port
- * number to initiating a connection to the main chatting
- * server.
+ * This class controls over the core server models.
+ * Accepts incoming client connections, then instantiates
+ * broadcaster threads for each clients for receiving
+ * messages and broadcast them to assigned clien views.
  * </p>
  */
 
@@ -51,13 +51,13 @@ public class Server {
     // starts the server thread, and accepts any incoming connections when requested.
     private void launch() {
         displayInfo();
-        HashMap userInfo = new HashMap();
+        HashMap clientInfo = new HashMap();
         Thread serverThread = new Thread(() -> {
             while (true) {
                 try {
-                    Socket userSocket = serverSocket.accept();
-                    Broadcaster broadcaster = new Broadcaster(serverView, userSocket, userInfo);
-                    broadcaster.start();
+                    Socket clientSocket = serverSocket.accept();
+                    Broadcaster broadcaster = new Broadcaster(serverView, clientSocket, clientInfo);
+                  //  broadcaster.start();
                 } catch (IOException ex) {
                     // unable to accept incoming connection.
                     JOptionPane.showMessageDialog(null, socketErrorMsg, "Socket Connection Error", JOptionPane.INFORMATION_MESSAGE);
