@@ -9,6 +9,18 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * @author Namyoon Kim
+ * <p>
+ * This class manages to transfer messages between the
+ * server and client. Incomming, or server status update
+ * messages will be broadcasted to target clients, by initiating
+ * each individual broadcast threads based on the client
+ * information. Some of the functions will decript user
+ * inputs to process required actions.
+ * </p>
+ */
+
 public class Broadcaster extends Thread {
 
     // client settings.
@@ -16,7 +28,9 @@ public class Broadcaster extends Thread {
     private Socket clientSocket;
     private HashMap clientInfo;
 
+    // network attributes.
     private ServerView serverView;
+    private DataInputStream dis;
 
     public Broadcaster(ServerView serverView, Socket clientSocket, HashMap clientInfo) {
         this.serverView = serverView;
@@ -25,9 +39,10 @@ public class Broadcaster extends Thread {
         connect();
     }
 
+    // initializes connections to clients.
     private void connect() {
         try {
-            DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+            dis = new DataInputStream(clientSocket.getInputStream());
             DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
             clientID = dis.readUTF();
             synchronized (clientInfo) {
@@ -41,6 +56,39 @@ public class Broadcaster extends Thread {
         }
     }
 
+    // the main tread of receiving and sending messages.
+    public void run() {
+        try {
+            String message;
+            while ((message = dis.readUTF()) != null) {
+                if (message.equals("/quit")) {
+                    // quitting the application by exiting the current
+                    // thread.
+                    break;
+                }
+                if (message.equals("/to")) {
+                    // sending private messages.
+                } else {
+                    broadcast(message);
+                }
+            }
+        } catch (IOException ex) {
+            // unable to receive messages from the client.
+            ex.printStackTrace();
+        } finally {
+            synchronized (clientInfo) {
+                clientInfo.remove(clientID);
+            }
+            try {
+                if (clientSocket != null) clientSocket.close();
+            } catch (IOException ex) {
+                // unable to update client connection status.
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    // broadcasts incoming messages to connected objects.
     private void broadcast(String message) {
         serverView.showMessage(message);
         synchronized (clientInfo) {
