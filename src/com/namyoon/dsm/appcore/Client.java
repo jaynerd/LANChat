@@ -15,6 +15,7 @@ public class Client {
     private String clientID;
 
     private ClientView clientView;
+    private DataOutputStream dos;
 
     public Client(ClientView clientView, int port, String ipAddress, String clientID) {
         this.port = port;
@@ -25,20 +26,21 @@ public class Client {
     }
 
     private void init() {
+        clientView.setClient(this);
         try {
             Socket clientSocket = new Socket(ipAddress, port);
             DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-            DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
+            dos = new DataOutputStream(clientSocket.getOutputStream());
             dos.writeUTF(clientID);
             dos.flush();
-            connect(dis);
+            receiveMessage(dis);
         } catch (IOException ex) {
             // unable to connect to the server.
             ex.printStackTrace();
         }
     }
 
-    private void connect(DataInputStream dis) {
+    private void receiveMessage(DataInputStream dis) {
         Thread inputThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -54,6 +56,15 @@ public class Client {
             }
         });
         inputThread.start();
+    }
+
+    public void sendMessage(String message) {
+        try {
+            dos.writeUTF(clientID + ": " + message);
+        } catch (IOException ex) {
+            // unable to send messages.
+            ex.printStackTrace();
+        }
     }
 
 }

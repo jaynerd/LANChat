@@ -57,7 +57,7 @@ public class Server {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     Broadcaster broadcaster = new Broadcaster(serverView, clientSocket, clientInfo);
-                  //  broadcaster.start();
+                    broadcaster.start();
                 } catch (IOException ex) {
                     // unable to accept incoming connection.
                     JOptionPane.showMessageDialog(null, socketErrorMsg, "Socket Connection Error", JOptionPane.INFORMATION_MESSAGE);

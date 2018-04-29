@@ -1,10 +1,12 @@
 package com.namyoon.dsm.guicore;
 
+import com.namyoon.dsm.appcore.Client;
 import com.namyoon.dsm.guitemplate.InterfacePanel;
 import com.namyoon.dsm.guitemplate.SuperPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * @author Namyoon Kim
@@ -19,11 +21,18 @@ import java.awt.*;
 
 public class ClientView extends SuperPanel implements InterfacePanel {
 
+    // client reference after instantiated.
+    private Client client;
+
+    // GUI components.
+    private JButton sendButton;
     private JTextArea chatTextArea;
+    private JTextField inputTextField;
 
     public ClientView() {
         init();
         addComponents();
+        addActions();
     }
 
     @Override
@@ -35,8 +44,8 @@ public class ClientView extends SuperPanel implements InterfacePanel {
     @Override
     // adds GUI components.
     public void addComponents() {
-        JButton sendButton = new JButton("Send");
-        JTextField inputTextField = new JTextField();
+        sendButton = new JButton("Send");
+        inputTextField = new JTextField();
         chatTextArea = new JTextArea();
         chatTextArea.setRows(5);
         chatTextArea.setColumns(50);
@@ -51,7 +60,15 @@ public class ClientView extends SuperPanel implements InterfacePanel {
     @Override
     // adds corresponding actions to each GUI components.
     public void addActions() {
+        sendButton.addActionListener((ActionEvent e) -> {
+            String message = inputTextField.getText();
+            client.sendMessage(message);
+        });
+    }
 
+    // sets the client object for sending messages to the server.
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     // shows client messages.
