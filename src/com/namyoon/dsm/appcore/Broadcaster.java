@@ -38,10 +38,12 @@ public class Broadcaster extends Thread {
     private int port;
     private ServerView serverView;
     private DataInputStream dis;
+    private DatagramSocket dataSocket;
 
-    public Broadcaster(int port, ServerView serverView, Socket clientSocket, HashMap clientInfo) {
+    public Broadcaster(int port, ServerView serverView, DatagramSocket dataSocket, Socket clientSocket, HashMap clientInfo) {
         this.port = port;
         this.serverView = serverView;
+        this.dataSocket = dataSocket;
         this.clientSocket = clientSocket;
         this.clientInfo = clientInfo;
         connect();
@@ -69,7 +71,6 @@ public class Broadcaster extends Thread {
         try {
             while (true) {
                 String message = dis.readUTF();
-                System.out.println(message);
                 // change to index of?
                 if (message.contains("/quit")) {
                     // quitting the application by exiting the current
@@ -126,15 +127,12 @@ public class Broadcaster extends Thread {
         try {
             for (String id : clientList) {
                 id += ",";
-                System.out.println(id);
             }
             String clientListMsg = Stream.of(clientList).collect(Collectors.joining(","));
             byte[] message = clientListMsg.getBytes();
-            InetAddress ipAddress = InetAddress.getByName("localhost");
-            DatagramPacket packet = new DatagramPacket(message, message.length, ipAddress, port);
-            DatagramSocket dataSocket = new DatagramSocket(port);
+            InetAddress udpAddress = InetAddress.getByName("229.5.38.17");
+            DatagramPacket packet = new DatagramPacket(message, message.length, udpAddress, 60005);
             dataSocket.send(packet);
-            dataSocket.close();
         } catch (Exception ex) {
             // unable to listen to the port.
             // unable to locate the local host.

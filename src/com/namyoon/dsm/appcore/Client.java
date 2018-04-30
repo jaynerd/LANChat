@@ -5,9 +5,7 @@ import com.namyoon.dsm.guicore.ClientView;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.Socket;
+import java.net.*;
 
 /**
  * @author Namyoon Kim
@@ -64,7 +62,9 @@ public class Client {
             @Override
             public void run() {
                 try {
-                    DatagramSocket dataSocket = new DatagramSocket(port);
+                    MulticastSocket multiSocket = new MulticastSocket(6000);
+                    multiSocket.setInterface(InetAddress.getByName(ipAddress));
+                    multiSocket.joinGroup(InetAddress.getByName("229.5.38.17"));
                     /** buffer size limitation*/
                     byte[] buffer = new byte[2048];
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
@@ -72,7 +72,7 @@ public class Client {
                         try {
                             String message = dis.readUTF();
                             clientView.showMessage(message);
-                            dataSocket.receive(packet);
+                            multiSocket.receive(packet);
                             String clientListMsg = new String(buffer, 0, packet.getLength());
                             updateStatus(clientListMsg);
                             packet.setLength(buffer.length);

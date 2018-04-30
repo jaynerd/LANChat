@@ -52,20 +52,25 @@ public class Server {
     private void launch() {
         displayInfo();
         HashMap clientInfo = new HashMap();
-        Thread serverThread = new Thread(() -> {
-            while (true) {
-                try {
-                    Socket clientSocket = serverSocket.accept();
-                    Broadcaster broadcaster = new Broadcaster(port, serverView, clientSocket, clientInfo);
-                    broadcaster.start();
-                } catch (IOException ex) {
-                    // unable to accept incoming connection.
-                    JOptionPane.showMessageDialog(null, socketErrorMsg, "Socket Connection Error", JOptionPane.INFORMATION_MESSAGE);
-                    ex.printStackTrace();
+        try {
+            Thread serverThread = new Thread(() -> {
+                while (true) {
+                    try {
+                        Socket clientSocket = serverSocket.accept();
+                        Broadcaster broadcaster = new Broadcaster(port, serverView, clientSocket, clientInfo);
+                        broadcaster.start();
+                    } catch (IOException ex) {
+                        // unable to accept incoming connection.
+                        JOptionPane.showMessageDialog(null, socketErrorMsg, "Socket Connection Error", JOptionPane.INFORMATION_MESSAGE);
+                        ex.printStackTrace();
+                    }
                 }
-            }
-        });
-        serverThread.start();
+            });
+            serverThread.start();
+        } catch (Exception ex) {
+            // unable to listen to the port.
+            ex.printStackTrace();
+        }
     }
 
     // displays general information of the server upon instantiation.
