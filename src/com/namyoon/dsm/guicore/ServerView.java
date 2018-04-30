@@ -20,6 +20,7 @@ public class ServerView extends SuperPanel implements InterfacePanel {
 
     // GUI component.
     private JTextArea logTextArea;
+    private JList clientList;
 
     public ServerView() {
         init();
@@ -41,7 +42,9 @@ public class ServerView extends SuperPanel implements InterfacePanel {
         logTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(logTextArea);
+        clientList = new JList();
         super.addComponent(this, scrollPane, 0.0125f, 0.02f, 600, 450);
+        super.addComponent(this, clientList, 0.727f, 0.03f, 200, 430);
     }
 
     @Override
@@ -52,6 +55,16 @@ public class ServerView extends SuperPanel implements InterfacePanel {
     // shows server log messages.
     public void showMessage(String message) {
         logTextArea.append("Server: " + message + "\n");
+    }
+
+    // updates the client list with the most current server
+    // status (number of clients).
+    public void updateClientList(String[] clientIDs) {
+        DefaultListModel<String> contents = new DefaultListModel<>();
+        for (int i = 0; i < clientIDs.length; i++) {
+            contents.addElement(clientIDs[i]);
+        }
+        clientList.setModel(contents);
     }
 
 }

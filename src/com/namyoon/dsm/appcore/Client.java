@@ -7,6 +7,17 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * @author Namyoon Kim
+ * <p>
+ * This class controls requests and responses from the server
+ * and client, vice versa. Received messages will be shown
+ * to the client view, and sent messages will be passed to
+ * the server to be broadcasted. Initial connection to the
+ * server will be made after gets instantiated.
+ * </p>
+ */
+
 public class Client {
 
     // client settings.
@@ -25,6 +36,8 @@ public class Client {
         init();
     }
 
+    // initialization. connecting to the server with given
+    // specifications.
     private void init() {
         clientView.setClient(this);
         try {
@@ -32,6 +45,7 @@ public class Client {
             DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
             dos = new DataOutputStream(clientSocket.getOutputStream());
             dos.writeUTF(clientID);
+            /**System.out.print(clientSocket.hashCode());*/
             dos.flush();
             receiveMessage(dis);
         } catch (IOException ex) {
@@ -40,6 +54,9 @@ public class Client {
         }
     }
 
+    // receives messages from the server. passes to the client
+    // view for displaying purpose. processed by an individual
+    // thread that was made for receiving messages only.
     private void receiveMessage(DataInputStream dis) {
         Thread inputThread = new Thread(new Runnable() {
             @Override
@@ -51,6 +68,7 @@ public class Client {
                     } catch (IOException ex) {
                         // unable to read messages.
                         ex.printStackTrace();
+                        break;
                     }
                 }
             }
@@ -58,6 +76,7 @@ public class Client {
         inputThread.start();
     }
 
+    // sends a message typed in the input text field.
     public void sendMessage(String message) {
         try {
             dos.writeUTF(clientID + ": " + message);

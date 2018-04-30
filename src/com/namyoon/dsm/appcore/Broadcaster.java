@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * @author Namyoon Kim
@@ -49,6 +50,7 @@ public class Broadcaster extends Thread {
                 clientInfo.put(clientID, dos);
             }
             broadcast("User ID '" + clientID + "' has been connected.");
+            updateStatus();
         } catch (IOException ex) {
             // unable to receive streams from the client.
             ex.printStackTrace();
@@ -60,12 +62,14 @@ public class Broadcaster extends Thread {
         try {
             while (true) {
                 String message = dis.readUTF();
-                if (message.equals("/quit")) {
+                System.out.println(message);
+                // change to index of?
+                if (message.contains("/quit")) {
                     // quitting the application by exiting the current
                     // thread.
                     break;
                 }
-                if (message.equals("/to")) {
+                if (message.contains("/to")) {
                     // sending private messages.
                 } else {
                     broadcast(message);
@@ -77,6 +81,7 @@ public class Broadcaster extends Thread {
         } finally {
             synchronized (clientInfo) {
                 clientInfo.remove(clientID);
+                updateStatus();
             }
             try {
                 if (clientSocket != null) clientSocket.close();
@@ -103,6 +108,14 @@ public class Broadcaster extends Thread {
                 }
             }
         }
+    }
+
+    // updates the client list of both the server and clients with
+    // the most up to date client list status.
+    private void updateStatus() {
+        Set<String> keys = clientInfo.keySet();
+        String[] clientList = keys.toArray(new String[keys.size()]);
+        serverView.updateClientList(clientList);
     }
 
 }

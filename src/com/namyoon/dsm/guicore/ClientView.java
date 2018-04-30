@@ -28,6 +28,7 @@ public class ClientView extends SuperPanel implements InterfacePanel {
     private JButton sendButton;
     private JTextArea chatTextArea;
     private JTextField inputTextField;
+    private JList clientList;
 
     public ClientView() {
         init();
@@ -52,7 +53,9 @@ public class ClientView extends SuperPanel implements InterfacePanel {
         chatTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(chatTextArea);
+        clientList = new JList();
         super.addComponent(this, scrollPane, 0.0125f, 0.02f, 600, 450);
+        super.addComponent(this, clientList, 0.727f, 0.03f, 200, 430);
         super.addComponent(this, inputTextField, 0.0125f, 0.77f, 600, 90);
         super.addComponent(this, sendButton, 0.733f, 0.777f, 190, 80);
     }
@@ -61,8 +64,10 @@ public class ClientView extends SuperPanel implements InterfacePanel {
     // adds corresponding actions to each GUI components.
     public void addActions() {
         sendButton.addActionListener((ActionEvent e) -> {
-            String message = inputTextField.getText();
-            client.sendMessage(message);
+            sendMessage();
+        });
+        inputTextField.addActionListener((ActionEvent e) -> {
+            sendMessage();
         });
     }
 
@@ -74,6 +79,24 @@ public class ClientView extends SuperPanel implements InterfacePanel {
     // shows client messages.
     public void showMessage(String message) {
         chatTextArea.append(message + "\n");
+    }
+
+    // sends a message to the client class then to the server.
+    private void sendMessage() {
+        String message = inputTextField.getText();
+        client.sendMessage(message);
+        inputTextField.setText("");
+        inputTextField.requestFocus();
+    }
+
+    // updates the client list with the most current server
+    // status (number of clients).
+    public void updateClientList(String[] clientIDs) {
+        DefaultListModel<String> contents = new DefaultListModel<>();
+        for (int i = 0; i < clientIDs.length; i++) {
+            contents.addElement(clientIDs[i]);
+        }
+        clientList.setModel(contents);
     }
 
 }

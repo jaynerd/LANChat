@@ -9,3 +9,4 @@
 7. message interface.
 8. enter to send.
 9. bar location in the middle.
+10. closing resources upon quitting.

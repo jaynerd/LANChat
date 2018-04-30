@@ -51,7 +51,8 @@ public class ClientSettingView extends SuperPanel implements InterfacePanel {
         idInputField = new JTextField(20);
         ipInputField = new JTextField(20);
         portInputField = new JTextField(10);
-        idInputField.setText("Hacker");
+        portInputField.setText("10001");
+        idInputField.setText("Client");
         ipInputField.setText("localhost");
 
         // button.

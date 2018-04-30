@@ -39,6 +39,7 @@ public class ServerSettingView extends SuperPanel implements InterfacePanel {
     public void addComponents() {
         JLabel portLabel = new JLabel("Port  (1 - 65535)  :");
         portInputField = new JTextField(10);
+        portInputField.setText("10001");
         activateButton = new JButton("Activate");
         super.addComponent(this, portLabel, 0.29f, 0.43f, 200, 30);
         super.addComponent(this, portInputField, 0.44f, 0.43f, 80, 30);
