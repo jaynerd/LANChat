@@ -56,7 +56,7 @@ public class Server {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    Broadcaster broadcaster = new Broadcaster(serverView, clientSocket, clientInfo);
+                    Broadcaster broadcaster = new Broadcaster(port, serverView, clientSocket, clientInfo);
                     broadcaster.start();
                 } catch (IOException ex) {
                     // unable to accept incoming connection.

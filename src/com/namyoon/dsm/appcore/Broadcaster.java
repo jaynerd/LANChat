@@ -5,10 +5,15 @@ import com.namyoon.dsm.guicore.ServerView;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Namyoon Kim
@@ -30,10 +35,12 @@ public class Broadcaster extends Thread {
     private HashMap clientInfo;
 
     // network attributes.
+    private int port;
     private ServerView serverView;
     private DataInputStream dis;
 
-    public Broadcaster(ServerView serverView, Socket clientSocket, HashMap clientInfo) {
+    public Broadcaster(int port, ServerView serverView, Socket clientSocket, HashMap clientInfo) {
+        this.port = port;
         this.serverView = serverView;
         this.clientSocket = clientSocket;
         this.clientInfo = clientInfo;
@@ -116,6 +123,23 @@ public class Broadcaster extends Thread {
         Set<String> keys = clientInfo.keySet();
         String[] clientList = keys.toArray(new String[keys.size()]);
         serverView.updateClientList(clientList);
+        try {
+            for (String id : clientList) {
+                id += ",";
+                System.out.println(id);
+            }
+            String clientListMsg = Stream.of(clientList).collect(Collectors.joining(","));
+            byte[] message = clientListMsg.getBytes();
+            InetAddress ipAddress = InetAddress.getByName("localhost");
+            DatagramPacket packet = new DatagramPacket(message, message.length, ipAddress, port);
+            DatagramSocket dataSocket = new DatagramSocket(port);
+            dataSocket.send(packet);
+            dataSocket.close();
+        } catch (Exception ex) {
+            // unable to listen to the port.
+            // unable to locate the local host.
+            ex.printStackTrace();
+        }
     }
 
 }
