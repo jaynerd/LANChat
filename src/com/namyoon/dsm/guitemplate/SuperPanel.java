@@ -7,32 +7,30 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
- * @author Namyoon Kim
- * <p>
- * This class contains fundamental methods for a panel creation.
- * Adding components, borders, and other essential placements of
- * GUI objects.
- * </p>
+ * @author Namyoon j4yn3rd@gmail.com
+ * This class contains fundamental functions for a sub-panel
+ * placement. Adding GUI components, borders, and adjusting
+ * each components' sizes including the sub-panel itself
+ * will be processed here.
  */
-
 public class SuperPanel extends JPanel {
 
     public MainView mainView = MainView.Instance;
 
+    // general GUI attributes.
     private int borderSize = 5;
-    private int frameWidth = MainView.frameWidth;
-    private int frameHeight = MainView.frameHeight;
+    private int frameWidth = mainView.mainFrameWidth;
+    private int frameHeight = mainView.mainFrameHeight;
 
     // initializes sub panels.
-    public void init(JPanel panel, Color color) {
-        panel.setLayout(null);
-        panel.setBorder(new LineBorder(color, borderSize));
+    public void init(JPanel subPanel, Color borderColor) {
+        subPanel.setLayout(null);
+        subPanel.setBorder(new LineBorder(borderColor, borderSize));
     }
 
-    // adds a resized GUI component to the designated panel.
-    public void addComponent(JPanel panel, JComponent component, float xPos, float yPos, int width, int height) {
+    // adds GUI components relatively resized to the main frame.
+    public void addComponents(JPanel subPanel, JComponent component, float xPos, float yPos, int width, int height) {
         component.setBounds(((int) (frameWidth * xPos)), ((int) (frameHeight * yPos)), width, height);
-        panel.add(component);
+        subPanel.add(component);
     }
-
 }

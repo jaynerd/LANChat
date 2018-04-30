@@ -6,123 +6,136 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author Namyoon Kim
- * <p>
- * This class controls specifications of the main
- * frame for the application. Shows assigned panels
- * based on user's input.
- * </p>
+ * @author Namyoon j4yn3rd@gmail.com
+ * This class controls essential characteristics of the main
+ * frame. Shows assigned panels according to user's input.
  */
-
 public class MainView extends JFrame {
 
     private LANChat lanChat;
     public static MainView Instance;
 
-    // server networking specifications.
-    private int port = 0;
-    private int minValue = 1;
-    private int maxValue = 65535;
-    private String errorMsg = "Please enter values between 1 to 65535.";
+    // network attributes.
+    private int tcpPort = 0;
+    private int udpPort = 0;
+    private int minPortValue = 1;
+    private int maxPortValue = 65535;
+    private String errorMsg = "Please enter values between " + minPortValue + " to " + maxPortValue;
 
-    // main frame size & visual specifications.
-    public static int frameWidth;
-    public static int frameHeight;
+    // GUI attributes.
+    public static int mainFrameWidth;
+    public static int mainFrameHeight;
     private float frameWidthRatio = 1.5f;
     private float frameHeightRatio = 1.2f;
 
-    // panel titles.
-    private String modeViewTitle = "LANChat: Mode Selection";
+    // sub-panel titles.
+    private String modeSelectViewTitle = "LANChat: Mode Selection";
     private String serverSetViewTitle = "LANChat: Server Settings";
     private String clientSetViewTitle = "LANChat: Client Settings";
     private String serverViewTitle = "LANChat: Server Terminal";
     private String clientViewTitle = "LANChat: Client Terminal";
 
     public MainView(LANChat lanChat) {
-        this.lanChat = lanChat;
         Instance = this;
+        this.lanChat = lanChat;
         init();
         showModeSelectionView();
     }
 
-    // initializes main view components.
+    // initialization.
     private void init() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frameWidth = (int) (screenSize.getWidth() / frameWidthRatio);
-        frameHeight = (int) (screenSize.getHeight() / frameHeightRatio);
-        this.setSize(frameWidth, frameHeight);
+        mainFrameWidth = (int) (screenSize.getWidth() / frameWidthRatio);
+        mainFrameHeight = (int) (screenSize.getHeight() / frameHeightRatio);
+        this.setSize(mainFrameWidth, mainFrameHeight);
         this.setLocationRelativeTo(null);
         this.setResizable(true);
     }
 
-    // refreshes the content of the main view frame.
-    private void refresh() {
+    // adds an assigned sub panel to the main frame.
+    private void addSubPanel(String title, JPanel subPanel) {
+        refreshFrame();
+        this.setTitle(title);
+        this.add(subPanel);
+        this.setVisible(true);
+    }
+
+    // removes every content of the main frame.
+    private void refreshFrame() {
         this.getContentPane().removeAll();
         this.revalidate();
         this.repaint();
     }
 
-    // refreshes then adds an assigned panel to the main view.
-    private void addPanel(String title, JPanel panel) {
-        refresh();
-        this.setTitle(title);
-        this.add(panel);
-        this.setVisible(true);
-    }
+    /**
+     * Sub-panel instantiations.
+     */
 
-    // displays the first panel, which is the mode selection view.
+    // displays the mode selection view where users can choose
+    // to instantiate either the main chat server or a client.
     private void showModeSelectionView() {
-        ModeSelectionView modeView = new ModeSelectionView();
-        addPanel(modeViewTitle, modeView);
+        ModeSelectionView modeSelectView = new ModeSelectionView();
+        addSubPanel(modeSelectViewTitle, modeSelectView);
     }
 
-    // displays the server setting panel where users can modify
-    // server specifications.
+    // displays the server settings view where users can set
+    // important specifications to initiate a server.
     public void showServerSettingView() {
         ServerSettingView serverSetView = new ServerSettingView();
-        addPanel(serverSetViewTitle, serverSetView);
+        addSubPanel(serverSetViewTitle, serverSetView);
     }
 
-    // displays the client setting panel where users can modify
-    // values to connect to the desired server.
-    // can be assumed as a general login view.
+    // displays the client settings view where users can modify
+    // client networking attributes to connect to a desired server.
     public void showClientSettingView() {
         ClientSettingView clientSetView = new ClientSettingView();
-        addPanel(clientSetViewTitle, clientSetView);
+        addSubPanel(clientSetViewTitle, clientSetView);
     }
 
-    // displays the server side view to control over the chat
-    // application.
-    // Also, by showing the server view, the server socket gets
-    // activated from the application core library.
-    public void showServerView(int port) {
+    // displays the server side view to manage overall chatting
+    // activities. this function also activates a server with
+    // given port numbers for TCP and UDP connections.
+    public void showServerView(int tcpPort) {
+        setPortValue(tcpPort);
         ServerView serverView = new ServerView();
-        addPanel(serverViewTitle, serverView);
-        lanChat.activateServer(serverView, port);
+        addSubPanel(serverViewTitle, serverView);
+        lanChat.activateServer(tcpPort, udpPort);
     }
 
-    // displays the client side of the main chatting window.
-    // users can send and receive messages including the server log.
-    // They also can send private messages to a specific user.
-    public void showClientView(int port, String ipAddress, String userID) {
+    // displays the client side view of the main chatting application
+    // window. users can send and receive messages including server logs.
+    // In addition, users are able to send private messages to another
+    // user.
+    public void showClientView(int tcpPort, String ipAddress, String clientID) {
+        setPortValue(tcpPort);
         ClientView clientView = new ClientView();
-        addPanel(clientViewTitle, clientView);
-        lanChat.createClient(clientView, port, ipAddress, userID);
+        addSubPanel(clientViewTitle, clientView);
+        lanChat.createClient(clientView, tcpPort, udpPort, ipAddress, clientID);
     }
 
-    // validates given port number before initiating the server socket.
-    // returns true when a legit port number is provided.
-    // a server will be running upon receiving correct port values.
-    public boolean validatePortValue(int port) {
-        boolean flag = false;
-        this.port = port;
-        if (port < minValue || maxValue < port) {
+    // sets a port value for UDP connection based on the given TCP
+    // port value.
+    private void setPortValue(int tcpPort) {
+        this.tcpPort = tcpPort;
+        if (tcpPort <= minPortValue) {
+            udpPort = tcpPort + 1;
+        } else {
+            udpPort = tcpPort - 1;
+        }
+    }
+
+    // validates given port values before instantiating a server socket.
+    // returns true if a legit port number has been provided. a server
+    // will be running after receiving an acceptable port value.
+    public boolean checkPortValue(int tcpPort) {
+        this.tcpPort = tcpPort;
+        boolean isAcceptable = false;
+        if (tcpPort < minPortValue || maxPortValue < tcpPort) {
             JOptionPane.showMessageDialog(null, errorMsg, "Server Initialization Failed", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            flag = true;
+            isAcceptable = true;
         }
-        return flag;
+        return isAcceptable;
     }
-
 }
