@@ -5,6 +5,8 @@ import com.namyoon.dsm.guicore.ClientView;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.Socket;
 
 /**
@@ -61,15 +63,29 @@ public class Client {
         Thread inputThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        String message = dis.readUTF();
-                        clientView.showMessage(message);
-                    } catch (IOException ex) {
-                        // unable to read messages.
-                        ex.printStackTrace();
-                        break;
+                try {
+                    DatagramSocket dataSocket = new DatagramSocket(port);
+                    /** buffer size limitation*/
+                    byte[] buffer = new byte[2048];
+                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                    while (true) {
+                        try {
+                            String message = dis.readUTF();
+                            clientView.showMessage(message);
+                            dataSocket.receive(packet);
+                            String clientListMsg = new String(buffer, 0, packet.getLength());
+                            updateStatus(clientListMsg);
+                            packet.setLength(buffer.length);
+                        } catch (IOException ex) {
+                            // unable to read messages.
+                            ex.printStackTrace();
+                            break;
+                        }
                     }
+                } catch (Exception ex) {
+                    // unable to listen to the port.
+                    // unable to receive messages through a UDP connection.
+                    ex.printStackTrace();
                 }
             }
         });
@@ -84,6 +100,13 @@ public class Client {
             // unable to send messages.
             ex.printStackTrace();
         }
+    }
+
+    // updates the client list of the client side application with
+    // the most up to date client list status from the broadcaster.
+    private void updateStatus(String clientListMsg) {
+        String[] clientList = clientListMsg.split(",");
+        clientView.updateClientList(clientList);
     }
 
 }
