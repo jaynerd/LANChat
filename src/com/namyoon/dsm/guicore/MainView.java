@@ -69,7 +69,7 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Sub-panel instantiations.
+     * region: Sub-panel instantiations.
      */
 
     // displays the mode selection view where users can choose
@@ -100,7 +100,7 @@ public class MainView extends JFrame {
         setPortValue(tcpPort);
         ServerView serverView = new ServerView();
         addSubPanel(serverViewTitle, serverView);
-        lanChat.activateServer(tcpPort, udpPort);
+        lanChat.activateServer(serverView, tcpPort, udpPort);
     }
 
     // displays the client side view of the main chatting application
@@ -113,6 +113,10 @@ public class MainView extends JFrame {
         addSubPanel(clientViewTitle, clientView);
         lanChat.createClient(clientView, tcpPort, udpPort, ipAddress, clientID);
     }
+
+    /**
+     * endRegion: Sub-panel instantiations.
+     */
 
     // sets a port value for UDP connection based on the given TCP
     // port value.
