@@ -25,9 +25,11 @@ public class Server {
     private int tcpPort;
     private int udpPort;
     private String udpIPAddress;
-    private ServerView serverView;
     private ServerSocket tcpServerSocket;
-    private HashMap clientInfo;
+    private DatagramSocket udpServerSocket;
+    private InetAddress udpInetAdd;
+    public ServerView serverView;
+    public HashMap clientInfo;
 
     // error messages.
     private String portErrorMsg = "Unable to listen to the port";
@@ -104,7 +106,7 @@ public class Server {
                     synchronized (clientInfo) {
                         clientInfo.put(clientID, dos);
                     }
-                    Broadcaster broadcaster = new Broadcaster(tcpPort, serverView, clientSocket, clientInfo);
+                    Broadcaster broadcaster = new Broadcaster(this, dis, dos, clientID);
                     broadcaster.start();
                 } catch (IOException ex) {
                     // unable to accept incoming connection.
@@ -120,11 +122,12 @@ public class Server {
     // to all of the connected clients. the information should be received
     // by a multicast socket.
     private void startUDP() throws UnknownHostException {
-        InetAddress udpInetAdd = InetAddress.getByName(udpIPAddress);
+        udpInetAdd = InetAddress.getByName(udpIPAddress);
         Thread udpServerThread = new Thread(() -> {
-            try (DatagramSocket udpServerSocket = new DatagramSocket()) {
+            try {
+                udpServerSocket = new DatagramSocket();
                 while (true) {
-                    updateStatus(udpInetAdd, udpServerSocket);
+                    updateStatus();
                     Thread.sleep(200);
                 }
             } catch (IOException ex) {
@@ -141,7 +144,7 @@ public class Server {
     // updates the client list. the list will be sent to the server view and other
     // connected clients through UDP network. The most up to date client list information
     // will be maintained for every 2 seconds.
-    private void updateStatus(InetAddress udpInetAdd, DatagramSocket udpServerSocket) {
+    private void updateStatus() {
         Set<String> keys = clientInfo.keySet();
         String[] clientList = keys.toArray(new String[keys.size()]);
         serverView.updateClientList(clientList);
@@ -156,6 +159,15 @@ public class Server {
         } catch (IOException ex) {
             // unable to listen to the port.
             ex.printStackTrace();
+        }
+    }
+
+    // removes client from the hashmap upon receiving a /quit request.
+    public void removeClient(String clientID) {
+        synchronized (clientInfo) {
+            clientInfo.remove(clientID);
+            // needed? because it will be executed once for every 2 seconds.
+            updateStatus();
         }
     }
 }
