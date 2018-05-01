@@ -12,7 +12,7 @@ import java.util.Iterator;
  * status updates will be broadcasted to destinations. This thread
  * will be instantiated for each client indiciduals. Some of the
  * functions will interpret user inputs to process corresponding
- * actions.s
+ * actions.
  */
 public class Broadcaster extends Thread {
 

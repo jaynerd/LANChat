@@ -57,7 +57,7 @@ public class ServerSettingView extends SuperPanel implements InterfacePanel {
             } catch (NumberFormatException ex) {
                 port = 0;
             }
-            flag = mainView.validatePortValue(port);
+            flag = mainView.checkPortValue(port);
             if (flag) {
                 mainView.showServerView(port);
             }

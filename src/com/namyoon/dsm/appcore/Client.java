@@ -8,91 +8,53 @@ import java.io.IOException;
 import java.net.*;
 
 /**
- * @author Namyoon Kim
- * <p>
- * This class controls requests and responses from the server
- * and client, vice versa. Received messages will be shown
- * to the client view, and sent messages will be passed to
- * the server to be broadcasted. Initial connection to the
- * server will be made after gets instantiated.
- * </p>
+ * @author Namyoon j4yn3rd@gmail.com
+ * This class manages received requests and sent responses between
+ * the server and clients. Received messages will be shown in the
+ * client view, and sent messages will be passed to the server to
+ * be broadcasted further. Initial connection to the server will be
+ * made after a client gets instantiated.
  */
-
 public class Client {
 
-    // client settings.
-    private int port;
-    private String ipAddress;
+    // network settings.
+    private int tcpPort;
+    private int udpPort;
+    private String tcpIPAddress;
+    private String udpIPAddress;
     private String clientID;
-
     private ClientView clientView;
     private DataOutputStream dos;
 
-    public Client(ClientView clientView, int port, String ipAddress, String clientID) {
-        this.port = port;
-        this.ipAddress = ipAddress;
+    public Client(ClientView clientView, int tcpPort, int udpPort, String tcpIPAddress, String udpIPAddress, String clientID) {
+        this.tcpPort = tcpPort;
+        this.udpPort = udpPort;
+        this.tcpIPAddress = tcpIPAddress;
+        this.udpIPAddress = udpIPAddress;
         this.clientID = clientID;
         this.clientView = clientView;
         init();
     }
 
-    // initialization. connecting to the server with given
-    // specifications.
+    // initialization. connects to the server with given settings.
     private void init() {
         clientView.setClient(this);
         try {
-            Socket clientSocket = new Socket(ipAddress, port);
+            Socket clientSocket = new Socket(tcpIPAddress, tcpPort);
             DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
             dos = new DataOutputStream(clientSocket.getOutputStream());
             dos.writeUTF(clientID);
             /**System.out.print(clientSocket.hashCode());*/
             dos.flush();
             receiveMessage(dis);
+            receiveStatus();
         } catch (IOException ex) {
             // unable to connect to the server.
             ex.printStackTrace();
         }
     }
 
-    // receives messages from the server. passes to the client
-    // view for displaying purpose. processed by an individual
-    // thread that was made for receiving messages only.
-    private void receiveMessage(DataInputStream dis) {
-        Thread inputThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    MulticastSocket multiSocket = new MulticastSocket(6000);
-                    multiSocket.setInterface(InetAddress.getByName(ipAddress));
-                    multiSocket.joinGroup(InetAddress.getByName("229.5.38.17"));
-                    /** buffer size limitation*/
-                    byte[] buffer = new byte[2048];
-                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-                    while (true) {
-                        try {
-                            String message = dis.readUTF();
-                            clientView.showMessage(message);
-                            multiSocket.receive(packet);
-                            String clientListMsg = new String(buffer, 0, packet.getLength());
-                            updateStatus(clientListMsg);
-                            packet.setLength(buffer.length);
-                        } catch (IOException ex) {
-                            // unable to read messages.
-                            ex.printStackTrace();
-                            break;
-                        }
-                    }
-                } catch (Exception ex) {
-                    // unable to listen to the port.
-                    // unable to receive messages through a UDP connection.
-                    ex.printStackTrace();
-                }
-            }
-        });
-        inputThread.start();
-    }
-
-    // sends a message typed in the input text field.
+    // sends a message typed in the input text field of the client view.
     public void sendMessage(String message) {
         try {
             dos.writeUTF(clientID + ": " + message);
@@ -102,11 +64,69 @@ public class Client {
         }
     }
 
-    // updates the client list of the client side application with
-    // the most up to date client list status from the broadcaster.
-    private void updateStatus(String clientListMsg) {
-        String[] clientList = clientListMsg.split(",");
-        clientView.updateClientList(clientList);
+    // receive messages from the server. passes to the client view
+    // for displaying purposes only. processed by an individual thread
+    // that was started for receiving chatting messages.
+    private void receiveMessage(DataInputStream dis) {
+        Thread inputThread = new Thread(() -> {
+            while (true) {
+                try {
+                    String message = dis.readUTF();
+                    clientView.showMessage(message);
+                } catch (IOException ex) {
+                    // unable to read messages.
+                    ex.printStackTrace();
+                    break;
+                }
+            }
+        });
+        inputThread.start();
     }
 
+    // receives the server status.
+    private void receiveStatus() {
+        try {
+            InetAddress udpInetAdd = InetAddress.getByName(udpIPAddress);
+            /** buffer size limitation */
+            byte[] buffer = new byte[2048];
+            try {
+                MulticastSocket multiSocket = new MulticastSocket(udpPort);
+                multiSocket.joinGroup(udpInetAdd);
+                startUDP(multiSocket, buffer);
+            } catch (IOException ex) {
+                // unable to instantiate a multicast socket.
+                ex.printStackTrace();
+            }
+        } catch (UnknownHostException ex) {
+            // unable to detect the host.
+            ex.printStackTrace();
+        }
+    }
+
+    // starts a UDP connection to receive server status. a multicast
+    // socket will be used to avoid port overload.
+    private void startUDP(MulticastSocket multiSocket, byte[] buffer) {
+        Thread udpClientThread = new Thread(() -> {
+            try {
+                while (true) {
+                    // receive information.
+                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                    multiSocket.receive(packet);
+                    String message = new String(buffer, 0, buffer.length);
+                    updateStatus(message);
+                }
+            } catch (IOException ex) {
+                // unable to receive packets.
+                ex.printStackTrace();
+            }
+        });
+        udpClientThread.start();
+    }
+
+    // updates the client list of the client side application (client
+    // view) with the most recent server status.
+    private void updateStatus(String clientListStr) {
+        String[] clientList = clientListStr.split(",");
+        clientView.updateClientList(clientList);
+    }
 }

@@ -29,7 +29,7 @@ public class SuperPanel extends JPanel {
     }
 
     // adds GUI components relatively resized to the main frame.
-    public void addComponents(JPanel subPanel, JComponent component, float xPos, float yPos, int width, int height) {
+    public void addComponent(JPanel subPanel, JComponent component, float xPos, float yPos, int width, int height) {
         component.setBounds(((int) (frameWidth * xPos)), ((int) (frameHeight * yPos)), width, height);
         subPanel.add(component);
     }

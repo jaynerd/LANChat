@@ -85,7 +85,7 @@ public class ClientSettingView extends SuperPanel implements InterfacePanel {
             }
 
             // checking a given port value.
-            flag = mainView.validatePortValue(port);
+            flag = mainView.checkPortValue(port);
             if (flag) {
                 // checking user ID value.
                 if (userID != null && !userID.isEmpty()) {
