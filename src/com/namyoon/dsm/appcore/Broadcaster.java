@@ -38,12 +38,14 @@ public class Broadcaster extends Thread {
             while (true) {
                 String message = dis.readUTF();
                 //FIX: index of? or other than contains.
-                if (message.contains("quit")) {
+                if (message.equals("/quit")) {
                     // exits the current loop & thread.
+                    broadcast(clientID + " has been disconnected.");
                     break;
                 }
-                if (message.contains("/to")) {
+                if (message.indexOf("/to ") == 0) {
                     // sending private messages.
+                    sendPrivateMessage(message);
                 } else {
                     broadcast(message);
                 }
@@ -65,16 +67,39 @@ public class Broadcaster extends Thread {
 
     // broadcasts incoming messages to connected clients and server.
     private void broadcast(String message) {
-        server.serverView.showMessage(message);
+        server.serverView.showMessage(clientID + ": " + message);
         synchronized (server.clientInfo) {
             Iterator client = server.clientInfo.values().iterator();
             while (client.hasNext()) {
                 try {
                     DataOutputStream clientDos = (DataOutputStream) client.next();
-                    clientDos.writeUTF(message);
+                    clientDos.writeUTF(clientID + ": " + message);
                     clientDos.flush();
                 } catch (IOException ex) {
                     // unable to send streams to the client.
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // sends a private message directly to tha target client.
+    private void sendPrivateMessage(String message) {
+        int start = message.indexOf(" ") + 1;
+        int end = message.indexOf(" ", start);
+
+        if (end != -1) {
+            String targetClient = message.substring(start, end);
+            String contents = message.substring(end + 1);
+            Object targetStream = server.clientInfo.get(targetClient);
+
+            if (targetStream != null) {
+                try {
+                    DataOutputStream targetDos = (DataOutputStream) targetStream;
+                    targetDos.writeUTF(clientID + " sent you a private message: " + contents);
+                    targetDos.flush();
+                } catch (IOException ex) {
+                    // unable to send private message to the target client.
                     ex.printStackTrace();
                 }
             }

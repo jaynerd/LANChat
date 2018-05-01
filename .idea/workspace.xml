@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69bb42a0-d056-4d98-bbf0-a6fd0550e773" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Broadcaster.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Broadcaster.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Client$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/LANChat.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/LANChat.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/appcore/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guicore/ClientSettingView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guicore/ClientSettingView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guicore/MainView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guicore/MainView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guicore/ServerSettingView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guicore/ServerSettingView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guitemplate/SuperPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LANChat/com/namyoon/dsm/guitemplate/SuperPanel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Broadcaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Broadcaster.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientSettingView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientSettingView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ServerSettingView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ServerSettingView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/SuperPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/SuperPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,81 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LANChat.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/LANChat.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12">
-              <caret line="6" selection-start-line="6" selection-end-line="10" selection-end-column="3" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Client.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Client.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Broadcaster.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Broadcaster.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SuperPanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/SuperPanel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InterfacePanel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/InterfacePanel.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -132,19 +48,20 @@
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ServerView.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/InterfacePanel.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/LANChat.java" />
-        <option value="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java" />
-        <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientSettingView.java" />
-        <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientView.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/SuperPanel.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ServerSettingView.java" />
+        <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java" />
+        <option value="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Broadcaster.java" />
         <option value="$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Client.java" />
+        <option value="$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientView.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="616" />
+    <option name="x" value="418" />
+    <option name="y" value="41" />
     <option name="width" value="653" />
     <option name="height" value="727" />
   </component>
@@ -266,7 +183,7 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30273753" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2962963" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
@@ -610,66 +527,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientSettingView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="61" column="13" selection-start-line="61" selection-start-column="13" selection-end-line="61" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ServerSettingView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
           <caret line="45" column="26" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/InterfacePanel.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/SuperPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Broadcaster.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -685,13 +546,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="197">
+          <caret line="70" column="113" selection-start-line="70" selection-start-column="113" selection-end-line="70" selection-end-column="113" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientSettingView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-192">
+          <caret line="61" column="13" selection-start-line="61" selection-start-column="13" selection-end-line="61" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/ClientView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-580">
+          <caret line="34" column="67" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="67" />
+          <folding>
+            <element signature="e#2575#2576#0" expanded="true" />
+            <element signature="e#2611#2612#0" expanded="true" />
+            <element signature="e#2688#2689#0" expanded="true" />
+            <element signature="e#2739#2740#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Broadcaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="92" column="12" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/appcore/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1782">
+          <caret line="165" column="47" selection-start-line="165" selection-start-column="47" selection-end-line="165" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guicore/MainView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="112" column="58" selection-start-line="112" selection-start-column="58" selection-end-line="112" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/SuperPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/namyoon/dsm/guitemplate/InterfacePanel.java">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>

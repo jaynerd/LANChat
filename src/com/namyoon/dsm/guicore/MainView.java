@@ -110,7 +110,7 @@ public class MainView extends JFrame {
     public void showClientView(int tcpPort, String ipAddress, String clientID) {
         setPortValue(tcpPort);
         ClientView clientView = new ClientView();
-        addSubPanel(clientViewTitle, clientView);
+        addSubPanel(clientViewTitle + " <" + clientID + ">", clientView);
         lanChat.createClient(clientView, tcpPort, udpPort, ipAddress, clientID);
     }
 

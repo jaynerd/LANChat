@@ -57,7 +57,20 @@ public class Client {
     // sends a message typed in the input text field of the client view.
     public void sendMessage(String message) {
         try {
-            dos.writeUTF(clientID + ": " + message);
+            dos.writeUTF(message);
+            if (message.contains("/quit")) {
+                System.exit(1);
+            }
+            if (message.indexOf("/to") == 0) {
+                int start = message.indexOf(" ") + 1;
+                int end = message.indexOf(" ", start);
+
+                if (end != -1) {
+                    String targetClient = message.substring(start, end);
+                    String contents = message.substring(end + 1);
+                    clientView.showMessage("You have sent a private message to " + targetClient + ": " + contents);
+                }
+            }
         } catch (IOException ex) {
             // unable to send messages.
             ex.printStackTrace();
@@ -88,11 +101,10 @@ public class Client {
         try {
             InetAddress udpInetAdd = InetAddress.getByName(udpIPAddress);
             /** buffer size limitation */
-            byte[] buffer = new byte[2048];
             try {
                 MulticastSocket multiSocket = new MulticastSocket(udpPort);
                 multiSocket.joinGroup(udpInetAdd);
-                startUDP(multiSocket, buffer);
+                startUDP(multiSocket);
             } catch (IOException ex) {
                 // unable to instantiate a multicast socket.
                 ex.printStackTrace();
@@ -105,11 +117,12 @@ public class Client {
 
     // starts a UDP connection to receive server status. a multicast
     // socket will be used to avoid port overload.
-    private void startUDP(MulticastSocket multiSocket, byte[] buffer) {
+    private void startUDP(MulticastSocket multiSocket) {
         Thread udpClientThread = new Thread(() -> {
             try {
                 while (true) {
                     // receive information.
+                    byte[] buffer = new byte[2048];
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                     multiSocket.receive(packet);
                     String message = new String(buffer, 0, buffer.length);

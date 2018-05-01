@@ -9,16 +9,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * @author Namyoon Kim
- * <p>
+ * @author Namyoon j4yn3rd@gmail.com
  * This class instantiates the client view, which is the main
  * chatting application view. Mainly handles displaying process
  * of the in and out stream of broadcasted messages. When the
  * client sends a message, it gets transferred to the server,
  * then broadcased to other clients on the server.
- * </p>
  */
-
 public class ClientView extends SuperPanel implements InterfacePanel {
 
     // client reference after instantiated.
@@ -34,6 +31,8 @@ public class ClientView extends SuperPanel implements InterfacePanel {
         init();
         addComponents();
         addActions();
+        showMessage("Enter '/quit' to exit.");
+        showMessage("Enter '/to UserID ' to send a private message.");
     }
 
     @Override
@@ -54,6 +53,7 @@ public class ClientView extends SuperPanel implements InterfacePanel {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewportView(chatTextArea);
         clientList = new JList();
+        clientList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         super.addComponent(this, scrollPane, 0.0125f, 0.02f, 600, 450);
         super.addComponent(this, clientList, 0.727f, 0.03f, 200, 430);
         super.addComponent(this, inputTextField, 0.0125f, 0.77f, 600, 90);
@@ -89,6 +89,17 @@ public class ClientView extends SuperPanel implements InterfacePanel {
         inputTextField.requestFocus();
     }
 
+    // sends a private message to the target client only.
+
+    /**
+     * private void sendPrivateMessage(String targetClient) {
+     * String message = targetClient + " " + inputTextField.getText();
+     * client.sendMessage(message);
+     * inputTextField.setText("");
+     * inputTextField.requestFocus();
+     * }
+     */
+
     // updates the client list with the most current server
     // status (number of clients).
     public void updateClientList(String[] clientIDs) {
@@ -98,5 +109,4 @@ public class ClientView extends SuperPanel implements InterfacePanel {
         }
         clientList.setModel(contents);
     }
-
 }

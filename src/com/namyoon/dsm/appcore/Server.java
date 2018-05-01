@@ -166,8 +166,6 @@ public class Server {
     public void removeClient(String clientID) {
         synchronized (clientInfo) {
             clientInfo.remove(clientID);
-            // needed? because it will be executed once for every 2 seconds.
-            updateStatus();
         }
     }
 }
