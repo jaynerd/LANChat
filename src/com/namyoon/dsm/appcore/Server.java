@@ -8,6 +8,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Namyoon j4yn3rd@gmail.com
@@ -117,16 +120,42 @@ public class Server {
     // to all of the connected clients. the information should be received
     // by a multicast socket.
     private void startUDP() throws UnknownHostException {
-        InetAddress udpAdd = InetAddress.getByName(udpIPAddress);
+        InetAddress udpInetAdd = InetAddress.getByName(udpIPAddress);
         Thread udpServerThread = new Thread(() -> {
             try (DatagramSocket udpServerSocket = new DatagramSocket()) {
                 while (true) {
+                    updateStatus(udpInetAdd, udpServerSocket);
+                    Thread.sleep(200);
                 }
             } catch (IOException ex) {
                 // unable to instantiate a socket.
                 ex.printStackTrace();
+            } catch (InterruptedException e) {
+                // unable to interrupt the current thread.
+                e.printStackTrace();
             }
         });
         udpServerThread.start();
+    }
+
+    // updates the client list. the list will be sent to the server view and other
+    // connected clients through UDP network. The most up to date client list information
+    // will be maintained for every 2 seconds.
+    private void updateStatus(InetAddress udpInetAdd, DatagramSocket udpServerSocket) {
+        Set<String> keys = clientInfo.keySet();
+        String[] clientList = keys.toArray(new String[keys.size()]);
+        serverView.updateClientList(clientList);
+        try {
+            for (String id : clientList) {
+                id += ",";
+            }
+            String clientListStr = Stream.of(clientList).collect(Collectors.joining(","));
+            byte[] message = clientListStr.getBytes();
+            DatagramPacket packet = new DatagramPacket(message, message.length, udpInetAdd, udpPort);
+            udpServerSocket.send(packet);
+        } catch (IOException ex) {
+            // unable to listen to the port.
+            ex.printStackTrace();
+        }
     }
 }
